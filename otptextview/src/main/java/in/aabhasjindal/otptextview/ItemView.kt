@@ -15,6 +15,7 @@ import androidx.core.content.res.ResourcesCompat
 class ItemView : FrameLayout {
 
     private var textView: TextView? = null
+    private var textViewS: TextView? = null
     private var view: View? = null
     private var barActiveColor: Int = 0
     private var barInactiveColor: Int = 0
@@ -94,7 +95,26 @@ class ItemView : FrameLayout {
         }
         textView?.setTextColor(textColor)
         textView?.setTextSize(TypedValue.COMPLEX_UNIT_PX, otpTextSize)
+        
         this.addView(textView, textViewParams)
+        
+        val textViewParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        textViewParams.gravity = Gravity.CENTER
+        textViewS = TextView(context)
+        textViewS?.gravity = Gravity.CENTER
+        if (otpTextTypeFace != null) {
+            try {
+                val tf = Typeface.createFromAsset(context.assets, otpTextTypeFace)
+                textViewS?.typeface = tf
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+        }
+        textViewS?.setTextColor(textColor)
+        textViewS?.setTextSize(TypedValue.COMPLEX_UNIT_PX, otpTextSize)
+        this.addView(textViewS, textViewParams)
+        
 
         if (barEnabled) {
             val barViewParams = LayoutParams(LayoutParams.MATCH_PARENT, barHeight.toInt())
@@ -122,9 +142,16 @@ class ItemView : FrameLayout {
         } else {
             textView?.text = ""
             if (value == "") {
+                
                 textView?.setBackgroundResource(defaultOTPDrawable)
+                textView?.visibility = View.VISIBLE //(defaultOTPDrawable)
+                textViewS?.visibility = View.INVISIBLE 
+                
             } else {
                 textView?.setBackgroundResource(hideOTPDrawable)
+                textViewS?.text = "*"
+                textView?.visibility = View.INVISIBLE
+                textViewS?.visibility = View.VISIBLE
             }
         }
     }
