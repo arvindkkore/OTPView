@@ -4,6 +4,7 @@
         <attr name="android:textColor" />
         <attr name="otp" format="string" />
         <attr name="hide_otp" format="boolean" />
+        <attr name="hide_otp_placeholder" format="string" />
         <attr name="hide_otp_drawable" format="reference" />
         <attr name="length" format="integer" />
         <attr name="width" format="dimension" />
